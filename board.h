@@ -17,7 +17,7 @@ private:
 
     board& operator++();
 public:
-    board();
+    board(std::string pieceList);
 
     board& operator--();
 
