@@ -15,6 +15,8 @@ private:
     std::string move;
     std::string ** chessboard;
 
+    char sideToMove;
+
     board& operator++();
 public:
     board(std::string pieceList);
