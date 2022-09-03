@@ -101,11 +101,11 @@ board::board(std::string pieceList)
         
         if (pieceType == "king")
         {
-            chessboard[x][y] = text1+"K";
+            chessboard[y][x] = text1+"K";
         }
         else
         {
-            chessboard[x][y] = text1+pieceType[0];
+            chessboard[y][x] = text1+pieceType[0];
         }
     }
     file.close();
@@ -117,7 +117,7 @@ board& board::operator++()
     int oldX = (int)move[0]-48;
     int oldY = (int)move[2]-48;
     int newX = (int)move[4]-48;
-    int newY = (int)move[6]-48;
+    int newY = (int)move[6]-48;                                                                             
 
     if (sideToMove == 'w')
     {
@@ -126,15 +126,17 @@ board& board::operator++()
         {
             if (whitePieces[i]->getX() == oldX && whitePieces[i]->getY() == oldY)
             {
-                chessboard[oldX][oldY] = "-";
+                chessboard[oldY][oldX] = "-";
 
                 if (whitePieces[i]->getPieceType() == "king")
                 {
-                    chessboard[newX][newY] = "wK";
+                    chessboard[newY][newX] = "wK";
                 }
                 else
                 {
-                    chessboard[newX][newY] = "w"+whitePieces[i]->getPieceType()[0];
+                    std::string s = "w";
+                    std::string ss = whitePieces[i]->getPieceType();
+                    chessboard[newY][newX] = s+ss[0];
                 }
 
                 whitePieces[i]->setX(newX);
@@ -151,15 +153,17 @@ board& board::operator++()
         {
             if (blackPieces[i]->getX() == oldX && blackPieces[i]->getY() == oldY)
             {
-                chessboard[oldX][oldY] = "-";
+                chessboard[oldY][oldX] = "-";
 
                 if (blackPieces[i]->getPieceType() == "king")
                 {
-                    chessboard[newX][newY] = "bK";
+                    chessboard[newY][newX] = "bK";
                 }
                 else
                 {
-                    chessboard[newX][newY] = "b"+blackPieces[i]->getPieceType()[0];
+                    std::string s = "b";
+                    std::string ss = whitePieces[i]->getPieceType();
+                    chessboard[newY][newX] = s+ss[0];                
                 }
 
                 blackPieces[i]->setX(newX);
