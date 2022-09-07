@@ -173,6 +173,8 @@ board& board::operator++()
             }
         }
     }
+
+    return *this;
 }
 
 board& board::operator--()
@@ -182,7 +184,9 @@ board& board::operator--()
 
     int x = 0;
     int y = 0;
-    bool checkMate = false;
+
+    int newX = (int)move[4]-48;
+    int newY = (int)move[6]-48;
 
     if (sideToMove == 'w')
     {
@@ -194,18 +198,19 @@ board& board::operator--()
                 y = blackPieces[i]->getY();
                 
                 //Check if king move is valid
-                if ((blackPieces[i]->getX()-1 >=0 && blackPieces[i]->getX()-1 < 8) && (blackPieces[i]->getY()-1 >=0 && blackPieces[i]->getY()-1 < 8) && chessboard[blackPieces[i]->getX()-1][blackPieces[i]->getY()-1] == "-")
+                if ((blackPieces[i]->getX()-1 >=0 && blackPieces[i]->getX()-1 < 8) && (blackPieces[i]->getY()-1 >=0 && blackPieces[i]->getY()-1 < 8) && chessboard[blackPieces[i]->getY()-1][blackPieces[i]->getX()-1] == "-")
                 {
+                    //std::cout<< "1" <<std::endl;
                     //Move king
                     blackPieces[i]->setX(blackPieces[i]->getX()-1);
                     blackPieces[i]->setY(blackPieces[i]->getY()-1);
 
                     for (int j = 0; j < numWhitePieces; j++)
                     {
-                        if (whitePieces[j]->getX() == move[4] && whitePieces[j]->getX() == move[6])
+                        if (whitePieces[j]->getX() == newX && whitePieces[j]->getY() == newY)
                         {
                             //Check if king avoied checkmate
-                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), move[4], move[6], blackPieces[i]->getX(), blackPieces[i]->getY()));
+                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), newX, newY, blackPieces[i]->getX(), blackPieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of b King" <<std::endl;
                                 
@@ -214,15 +219,15 @@ board& board::operator--()
                         }
                     }
                 }
-                else if ((blackPieces[i]->getX() >=0 && blackPieces[i]->getX() < 8) && (blackPieces[i]->getY()-1 >=0 && blackPieces[i]->getY()-1 < 8) && chessboard[blackPieces[i]->getX()][blackPieces[i]->getY()-1] == "-")
+                else if (blackPieces[i]->getY()-1 >=0 && blackPieces[i]->getY()-1 < 8 && chessboard[blackPieces[i]->getY()-1][blackPieces[i]->getX()] == "-")
                 {
                     blackPieces[i]->setY(blackPieces[i]->getY()-1);
 
                     for (int j = 0; j < numWhitePieces; j++)
                     {
-                        if (whitePieces[j]->getX() == move[4] && whitePieces[j]->getX() == move[6])
+                        if (whitePieces[j]->getX() == newX && whitePieces[j]->getY() == newY)
                         {
-                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), move[4], move[6], blackPieces[i]->getX(), blackPieces[i]->getY()));
+                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), newX, newY, blackPieces[i]->getX(), blackPieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of b King" <<std::endl;
                                 
@@ -231,16 +236,16 @@ board& board::operator--()
                         }
                     }
                 }
-                else if ((blackPieces[i]->getX()+1 >=0 && blackPieces[i]->getX()+1 < 8) && (blackPieces[i]->getY()-1 >=0 && blackPieces[i]->getY()-1 < 8) && chessboard[blackPieces[i]->getX()+1][blackPieces[i]->getY()-1] == "-")
+                else if ((blackPieces[i]->getX()+1 >=0 && blackPieces[i]->getX()+1 < 8) && (blackPieces[i]->getY()-1 >=0 && blackPieces[i]->getY()-1 < 8) && chessboard[blackPieces[i]->getY()-1][blackPieces[i]->getX()+1] == "-")
                 {
                     blackPieces[i]->setX(blackPieces[i]->getX()+1);
                     blackPieces[i]->setY(blackPieces[i]->getY()-1);
 
                     for (int j = 0; j < numWhitePieces; j++)
                     {
-                        if (whitePieces[j]->getX() == move[4] && whitePieces[j]->getX() == move[6])
+                        if (whitePieces[j]->getX() == newX && whitePieces[j]->getY() == newY)
                         {
-                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), move[4], move[6], blackPieces[i]->getX(), blackPieces[i]->getY()));
+                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), newX, newY, blackPieces[i]->getX(), blackPieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of b King" <<std::endl;
                                 
@@ -250,15 +255,15 @@ board& board::operator--()
                         }
                     }
                 }
-                else if ((blackPieces[i]->getX()+1 >=0 && blackPieces[i]->getX()+1 < 8) && (blackPieces[i]->getY() >=0 && blackPieces[i]->getY() < 8) && chessboard[blackPieces[i]->getX()+1][blackPieces[i]->getY()] == "-")
+                else if (blackPieces[i]->getX()+1 >= 0 && blackPieces[i]->getX()+1 < 8 && chessboard[blackPieces[i]->getY()][blackPieces[i]->getX()+1] == "-")
                 {
                     blackPieces[i]->setX(blackPieces[i]->getX()+1);
 
                     for (int j = 0; j < numWhitePieces; j++)
                     {
-                        if (whitePieces[j]->getX() == move[4] && whitePieces[j]->getX() == move[6])
+                        if (whitePieces[j]->getX() == newX && whitePieces[j]->getY() == newY)
                         {
-                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), move[4], move[6], blackPieces[i]->getX(), blackPieces[i]->getY()));
+                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), newX, newY, blackPieces[i]->getX(), blackPieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of b King" <<std::endl;
                                 
@@ -268,34 +273,37 @@ board& board::operator--()
                         }
                     }
                 }
-                else if ((blackPieces[i]->getX()+1 >=0 && blackPieces[i]->getX()+1 < 8) && (blackPieces[i]->getY()+1 >=0 && blackPieces[i]->getY()+1 < 8) && chessboard[blackPieces[i]->getX()+1][blackPieces[i]->getY()+1] == "-")
+                else if ((blackPieces[i]->getX()+1 >=0 && blackPieces[i]->getX()+1 < 8) && (blackPieces[i]->getY()+1 >= 0 && blackPieces[i]->getY()+1 < 8) && chessboard[blackPieces[i]->getY()+1][blackPieces[i]->getX()+1] == "-")
                 {
                     blackPieces[i]->setX(blackPieces[i]->getX()+1);
                     blackPieces[i]->setY(blackPieces[i]->getY()+1);
 
                     for (int j = 0; j < numWhitePieces; j++)
                     {
-                        if (whitePieces[j]->getX() == move[4] && whitePieces[j]->getX() == move[6])
+                        //std::cout<< whitePieces[j]->getX() << " == " << move[4] << " and " << whitePieces[j]->getY() << " == " << move[6] <<std::endl;
+
+                        if ((whitePieces[j]->getX() == newX) && (whitePieces[j]->getY() == newY))
                         {
-                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), move[4], move[6], blackPieces[i]->getX(), blackPieces[i]->getY()));
+                            //std::cout<< whitePieces[j]->getPieceType() << " " << move[4] << " " << move[6] << " " << blackPieces[i]->getX() << " " << blackPieces[i]->getY() <<std::endl;
+
+                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), newX, newY, blackPieces[i]->getX(), blackPieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of b King" <<std::endl;
                                 
                                 return *this;
                             }
-                            
                         }
                     }
                 }
-                else if ((blackPieces[i]->getX() >=0 && blackPieces[i]->getX() < 8) && (blackPieces[i]->getY()+1 >=0 && blackPieces[i]->getY()+1 < 8) && chessboard[blackPieces[i]->getX()][blackPieces[i]->getY()+1] == "-")
+                else if (blackPieces[i]->getY()+1 >=0 && blackPieces[i]->getY()+1 < 8 && chessboard[blackPieces[i]->getY()+1][blackPieces[i]->getX()] == "-")
                 {
                     blackPieces[i]->setY(blackPieces[i]->getY()+1);
 
                     for (int j = 0; j < numWhitePieces; j++)
                     {
-                        if (whitePieces[j]->getX() == move[4] && whitePieces[j]->getX() == move[6])
+                        if (whitePieces[j]->getX() == newX && whitePieces[j]->getX() == newY)
                         {
-                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), move[4], move[6], blackPieces[i]->getX(), blackPieces[i]->getY()));
+                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), newX, newY, blackPieces[i]->getX(), blackPieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of b King" <<std::endl;
                                 
@@ -304,16 +312,16 @@ board& board::operator--()
                         }
                     }
                 }
-                else if ((blackPieces[i]->getX()-1 >=0 && blackPieces[i]->getX()-1 < 8) && (blackPieces[i]->getY()+1 >=0 && blackPieces[i]->getY()+1 < 8) && chessboard[blackPieces[i]->getX()-1][blackPieces[i]->getY()+1] == "-")
+                else if ((blackPieces[i]->getX()-1 >=0 && blackPieces[i]->getX()-1 < 8) && (blackPieces[i]->getY()+1 >=0 && blackPieces[i]->getY()+1 < 8) && chessboard[blackPieces[i]->getY()+1][blackPieces[i]->getX()-1] == "-")
                 {
                     blackPieces[i]->setX(blackPieces[i]->getX()-1);
                     blackPieces[i]->setY(blackPieces[i]->getY()+1);
 
                     for (int j = 0; j < numWhitePieces; j++)
                     {
-                        if (whitePieces[j]->getX() == move[4] && whitePieces[j]->getX() == move[6])
+                        if (whitePieces[j]->getX() == newX && whitePieces[j]->getX() == newY)
                         {
-                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), move[4], move[6], blackPieces[i]->getX(), blackPieces[i]->getY()));
+                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), newX, newY, blackPieces[i]->getX(), blackPieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of b King" <<std::endl;
                                 
@@ -322,15 +330,15 @@ board& board::operator--()
                         }
                     }
                 }
-                else if ((blackPieces[i]->getX()-1 >=0 && blackPieces[i]->getX()-1 < 8) && (blackPieces[i]->getY() >=0 && blackPieces[i]->getY() < 8) && chessboard[blackPieces[i]->getX()-1][blackPieces[i]->getY()] == "-")
+                else if (blackPieces[i]->getX()-1 >=0 && blackPieces[i]->getX()-1 < 8 && chessboard[blackPieces[i]->getY()][blackPieces[i]->getX()-1] == "-")
                 {
                     blackPieces[i]->setX(blackPieces[i]->getX()-1);
 
                     for (int j = 0; j < numWhitePieces; j++)
                     {
-                        if (whitePieces[j]->getX() == move[4] && whitePieces[j]->getX() == move[6])
+                        if (whitePieces[j]->getX() == newX && whitePieces[j]->getX() == newY)
                         {
-                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), move[4], move[6], blackPieces[i]->getX(), blackPieces[i]->getY()));
+                            if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), newX, newY, blackPieces[i]->getX(), blackPieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of b King" <<std::endl;
                                 
@@ -361,7 +369,7 @@ board& board::operator--()
                 y = whitePieces[i]->getY();
 
                 //Check if king move is valid
-                if ((whitePieces[i]->getX()-1 >=0 && whitePieces[i]->getX()-1 < 8) && (whitePieces[i]->getY()-1 >=0 && whitePieces[i]->getY()-1 < 8) && chessboard[whitePieces[i]->getX()-1][whitePieces[i]->getY()-1] == "-")
+                if ((whitePieces[i]->getX()-1 >=0 && whitePieces[i]->getX()-1 < 8) && (whitePieces[i]->getY()-1 >=0 && whitePieces[i]->getY()-1 < 8) && chessboard[whitePieces[i]->getY()-1][whitePieces[i]->getX()-1] == "-")
                 {
                     //Move king
                     whitePieces[i]->setX(whitePieces[i]->getX()-1);
@@ -369,10 +377,10 @@ board& board::operator--()
 
                     for (int j = 0; j < numBlackPieces; j++)
                     {
-                        if (blackPieces[j]->getX() == move[4] && blackPieces[j]->getX() == move[6])
+                        if (blackPieces[j]->getX() == newX && blackPieces[j]->getY() == newY)
                         {
                             //Check for checkmate
-                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), move[4], move[6], whitePieces[i]->getX(), whitePieces[i]->getY()));
+                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), newX, newY, whitePieces[i]->getX(), whitePieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of w King" <<std::endl;
                                 
@@ -381,15 +389,15 @@ board& board::operator--()
                         }
                     }
                 }
-                else if ((whitePieces[i]->getX() >=0 && whitePieces[i]->getX() < 8) && (whitePieces[i]->getY()-1 >=0 && whitePieces[i]->getY()-1 < 8) && chessboard[whitePieces[i]->getX()][whitePieces[i]->getY()-1] == "-")
+                else if (whitePieces[i]->getY()-1 >=0 && whitePieces[i]->getY()-1 < 8 && chessboard[whitePieces[i]->getY()-1][whitePieces[i]->getX()] == "-")
                 {
                     whitePieces[i]->setY(whitePieces[i]->getY()-1);
 
                     for (int j = 0; j < numBlackPieces; j++)
                     {
-                        if (blackPieces[j]->getX() == move[4] && blackPieces[j]->getX() == move[6])
+                        if (blackPieces[j]->getX() == newX && blackPieces[j]->getY() == newY)
                         {
-                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), move[4], move[6], whitePieces[i]->getX(), whitePieces[i]->getY()));
+                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), newX, newY, whitePieces[i]->getX(), whitePieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of w King" <<std::endl;
                                 
@@ -398,16 +406,16 @@ board& board::operator--()
                         }
                     }
                 }
-                else if ((whitePieces[i]->getX()+1 >=0 && whitePieces[i]->getX()+1 < 8) && (whitePieces[i]->getY()-1 >=0 && whitePieces[i]->getY()-1 < 8) && chessboard[whitePieces[i]->getX()+1][whitePieces[i]->getY()-1] == "-")
+                else if ((whitePieces[i]->getX()+1 >=0 && whitePieces[i]->getX()+1 < 8) && (whitePieces[i]->getY()-1 >=0 && whitePieces[i]->getY()-1 < 8) && chessboard[whitePieces[i]->getY()-1][whitePieces[i]->getX()+1] == "-")
                 {
                     whitePieces[i]->setX(whitePieces[i]->getX()+1);
                     whitePieces[i]->setY(whitePieces[i]->getY()-1);
 
                     for (int j = 0; j < numBlackPieces; j++)
                     {
-                        if (blackPieces[j]->getX() == move[4] && blackPieces[j]->getX() == move[6])
+                        if (blackPieces[j]->getX() == newX && blackPieces[j]->getY() == newY)
                         {
-                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), move[4], move[6], whitePieces[i]->getX(), whitePieces[i]->getY()));
+                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), newX, newY, whitePieces[i]->getX(), whitePieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of w King" <<std::endl;
                                 
@@ -416,15 +424,15 @@ board& board::operator--()
                         }
                     }
                 }
-                else if ((whitePieces[i]->getX()+1 >=0 && whitePieces[i]->getX()+1 < 8) && (whitePieces[i]->getY() >=0 && whitePieces[i]->getY() < 8) && chessboard[whitePieces[i]->getX()+1][whitePieces[i]->getY()] == "-")
+                else if (whitePieces[i]->getX()+1 >=0 && whitePieces[i]->getX()+1 < 8 && chessboard[whitePieces[i]->getY()][whitePieces[i]->getX()+1] == "-")
                 {
                     whitePieces[i]->setX(whitePieces[i]->getX()+1);
 
                     for (int j = 0; j < numBlackPieces; j++)
                     {
-                        if (blackPieces[j]->getX() == move[4] && blackPieces[j]->getX() == move[6])
+                        if (blackPieces[j]->getX() == newX && blackPieces[j]->getY() == newY)
                         {
-                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), move[4], move[6], whitePieces[i]->getX(), whitePieces[i]->getY()));
+                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), newX, newY, whitePieces[i]->getX(), whitePieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of w King" <<std::endl;
                                 
@@ -433,16 +441,16 @@ board& board::operator--()
                         }
                     }
                 }
-                else if ((whitePieces[i]->getX()+1 >=0 && whitePieces[i]->getX()+1 < 8) && (whitePieces[i]->getY()+1 >=0 && whitePieces[i]->getY()+1 < 8) && chessboard[whitePieces[i]->getX()+1][whitePieces[i]->getY()+1] == "-")
+                else if ((whitePieces[i]->getX()+1 >=0 && whitePieces[i]->getX()+1 < 8) && (whitePieces[i]->getY()+1 >=0 && whitePieces[i]->getY()+1 < 8) && chessboard[whitePieces[i]->getY()+1][whitePieces[i]->getX()+1] == "-")
                 {
                     whitePieces[i]->setX(whitePieces[i]->getX()+1);
                     whitePieces[i]->setY(whitePieces[i]->getY()+1);
 
                     for (int j = 0; j < numBlackPieces; j++)
                     {
-                        if (blackPieces[j]->getX() == move[4] && blackPieces[j]->getX() == move[6])
+                        if (blackPieces[j]->getX() == newX && blackPieces[j]->getY() == newY)
                         {
-                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), move[4], move[6], whitePieces[i]->getX(), whitePieces[i]->getY()));
+                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), newX, newY, whitePieces[i]->getX(), whitePieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of w King" <<std::endl;
                                 
@@ -451,15 +459,15 @@ board& board::operator--()
                         }
                     }
                 }
-                else if ((whitePieces[i]->getX() >=0 && whitePieces[i]->getX() < 8) && (whitePieces[i]->getY()+1 >=0 && whitePieces[i]->getY()+1 < 8) && chessboard[whitePieces[i]->getX()][whitePieces[i]->getY()+1] == "-")
+                else if (whitePieces[i]->getY()+1 >=0 && whitePieces[i]->getY()+1 < 8 && chessboard[whitePieces[i]->getY()+1][whitePieces[i]->getX()] == "-")
                 {
                     whitePieces[i]->setY(whitePieces[i]->getY()+1);
 
                     for (int j = 0; j < numBlackPieces; j++)
                     {
-                        if (blackPieces[j]->getX() == move[4] && blackPieces[j]->getX() == move[6])
+                        if (blackPieces[j]->getX() == newX && blackPieces[j]->getY() == newY)
                         {
-                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), move[4], move[6], whitePieces[i]->getX(), whitePieces[i]->getY()));
+                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), newX, newY, whitePieces[i]->getX(), whitePieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of w King" <<std::endl;
                                 
@@ -468,16 +476,16 @@ board& board::operator--()
                         }
                     }
                 }
-                else if ((whitePieces[i]->getX()-1 >=0 && whitePieces[i]->getX()-1 < 8) && (whitePieces[i]->getY()+1 >=0 && whitePieces[i]->getY()+1 < 8) && chessboard[whitePieces[i]->getX()-1][whitePieces[i]->getY()+1] == "-")
+                else if ((whitePieces[i]->getX()-1 >=0 && whitePieces[i]->getX()-1 < 8) && (whitePieces[i]->getY()+1 >=0 && whitePieces[i]->getY()+1 < 8) && chessboard[whitePieces[i]->getY()+1][whitePieces[i]->getX()-1] == "-")
                 {
                     whitePieces[i]->setX(whitePieces[i]->getX()-1);
                     whitePieces[i]->setY(whitePieces[i]->getY()+1);
 
                     for (int j = 0; j < numBlackPieces; j++)
                     {
-                        if (blackPieces[j]->getX() == move[4] && blackPieces[j]->getX() == move[6])
+                        if (blackPieces[j]->getX() == newX && blackPieces[j]->getY() == newY)
                         {
-                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), move[4], move[6], whitePieces[i]->getX(), whitePieces[i]->getY()));
+                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), newX, newY, whitePieces[i]->getX(), whitePieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of w King" <<std::endl;
                                 
@@ -486,15 +494,15 @@ board& board::operator--()
                         }
                     }
                 }
-                else if ((whitePieces[i]->getX()-1 >=0 && whitePieces[i]->getX()-1 < 8) && (whitePieces[i]->getY() >=0 && whitePieces[i]->getY() < 8) && chessboard[whitePieces[i]->getX()-1][whitePieces[i]->getY()] == "-")
+                else if (whitePieces[i]->getX()-1 >=0 && whitePieces[i]->getX()-1 < 8 && chessboard[whitePieces[i]->getY()][whitePieces[i]->getX()-1] == "-")
                 {
                     whitePieces[i]->setX(whitePieces[i]->getX()-1);
 
                     for (int j = 0; j < numBlackPieces; j++)
                     {
-                        if (blackPieces[j]->getX() == move[4] && blackPieces[j]->getX() == move[6])
+                        if (blackPieces[j]->getX() == newX && blackPieces[j]->getY() == newY)
                         {
-                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), move[4], move[6], whitePieces[i]->getX(), whitePieces[i]->getY()));
+                            if (!checkIfPieceHasCheck(blackPieces[j]->getPieceType(), newX, newY, whitePieces[i]->getX(), whitePieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of w King" <<std::endl;
                                 
@@ -512,6 +520,8 @@ board& board::operator--()
             }
         }
     }
+
+    return *this;
 }
 
 bool board::checkIfPieceHasCheck(std::string pieceType, int xPos, int yPos, int kingX, int kingY)
@@ -843,6 +853,14 @@ bool board::checkIfPieceHasCheck(std::string pieceType, int xPos, int yPos, int 
 
             return true;
         }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        return false;
     }
 }
 
