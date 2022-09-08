@@ -280,12 +280,8 @@ board& board::operator--()
 
                     for (int j = 0; j < numWhitePieces; j++)
                     {
-                        //std::cout<< whitePieces[j]->getX() << " == " << move[4] << " and " << whitePieces[j]->getY() << " == " << move[6] <<std::endl;
-
                         if ((whitePieces[j]->getX() == newX) && (whitePieces[j]->getY() == newY))
                         {
-                            //std::cout<< whitePieces[j]->getPieceType() << " " << move[4] << " " << move[6] << " " << blackPieces[i]->getX() << " " << blackPieces[i]->getY() <<std::endl;
-
                             if (!checkIfPieceHasCheck(whitePieces[j]->getPieceType(), newX, newY, blackPieces[i]->getX(), blackPieces[i]->getY()));
                             {
                                 std::cout<< "Failed: No Checkmate of b King" <<std::endl;
