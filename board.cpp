@@ -566,7 +566,7 @@ bool board::checkIfPieceHasCheck(std::string pieceType, int xPos, int yPos, int 
             
             for (int i = 0; i < numWhitePieces; i++)
             {
-                if (distanceX*-1 == distanceX)
+                if (distanceX == abs(distanceX))
                 {
                     if (whitePieces[i]->getX() < xPos && whitePieces[i]->getX() > kingX && whitePieces[i]->getY() == yPos)
                     {
@@ -581,7 +581,7 @@ bool board::checkIfPieceHasCheck(std::string pieceType, int xPos, int yPos, int 
                     }
                 }
 
-                if (distanceY*-1 == distanceY)
+                if (distanceY == abs(distanceY))
                 {
                     if (whitePieces[i]->getY() < yPos && whitePieces[i]->getY() > kingY && whitePieces[i]->getX() == xPos)
                     {
@@ -599,31 +599,31 @@ bool board::checkIfPieceHasCheck(std::string pieceType, int xPos, int yPos, int 
             
             for (int i = 0; i < numBlackPieces; i++)
             {
-                if (distanceX*-1 == distanceX)
+                if (distanceX == abs(distanceX))
                 {
-                    if (blackPieces[i]->getX() < xPos && blackPieces[i]->getX() > kingX && whitePieces[i]->getY() == yPos)
+                    if (blackPieces[i]->getX() < xPos && blackPieces[i]->getX() > kingX && blackPieces[i]->getY() == yPos)
                     {
                         return false;
                     }
                 }
                 else
                 {
-                    if (blackPieces[i]->getX() > xPos && blackPieces[i]->getX() < kingX && whitePieces[i]->getY() == yPos)
+                    if (blackPieces[i]->getX() > xPos && blackPieces[i]->getX() < kingX && blackPieces[i]->getY() == yPos)
                     {
                         return false;
                     }
                 }
 
-                if (distanceY*-1 == distanceY)
+                if (distanceY == abs(distanceY))
                 {
-                    if (blackPieces[i]->getY() < yPos && blackPieces[i]->getY() > kingY && whitePieces[i]->getX() == xPos)
+                    if (blackPieces[i]->getY() < yPos && blackPieces[i]->getY() > kingY && blackPieces[i]->getX() == xPos)
                     {
                         return false;
                     }
                 }
                 else
                 {
-                    if (blackPieces[i]->getY() > yPos && blackPieces[i]->getY() < kingY && whitePieces[i]->getX() == xPos)
+                    if (blackPieces[i]->getY() > yPos && blackPieces[i]->getY() < kingY && blackPieces[i]->getX() == xPos)
                     {
                         return false;
                     }
@@ -719,7 +719,7 @@ bool board::checkIfPieceHasCheck(std::string pieceType, int xPos, int yPos, int 
 
             for (int i = 0; i < numWhitePieces; i++)
             {
-                if (distanceX*-1 == distanceX)
+                if (distanceX == abs(distanceX))
                 {
                     if (whitePieces[i]->getX() < xPos && whitePieces[i]->getX() > kingX && whitePieces[i]->getY() == yPos)
                     {
@@ -734,7 +734,7 @@ bool board::checkIfPieceHasCheck(std::string pieceType, int xPos, int yPos, int 
                     }
                 }
 
-                if (distanceY*-1 == distanceY)
+                if (distanceY == abs(distanceY))
                 {
                     if (whitePieces[i]->getY() < yPos && whitePieces[i]->getY() > kingY && whitePieces[i]->getX() == xPos)
                     {
@@ -752,31 +752,31 @@ bool board::checkIfPieceHasCheck(std::string pieceType, int xPos, int yPos, int 
             
             for (int i = 0; i < numBlackPieces; i++)
             {
-                if (distanceX*-1 == distanceX)
+                if (distanceX == abs(distanceX))
                 {
-                    if (blackPieces[i]->getX() < xPos && blackPieces[i]->getX() > kingX && whitePieces[i]->getY() == yPos)
+                    if (blackPieces[i]->getX() < xPos && blackPieces[i]->getX() > kingX && blackPieces[i]->getY() == yPos)
                     {
                         return false;
                     }
                 }
                 else
                 {
-                    if (blackPieces[i]->getX() > xPos && blackPieces[i]->getX() < kingX && whitePieces[i]->getY() == yPos)
+                    if (blackPieces[i]->getX() > xPos && blackPieces[i]->getX() < kingX && blackPieces[i]->getY() == yPos)
                     {
                         return false;
                     }
                 }
 
-                if (distanceY*-1 == distanceY)
+                if (distanceY == abs(distanceY))
                 {
-                    if (blackPieces[i]->getY() < yPos && blackPieces[i]->getY() > kingY && whitePieces[i]->getX() == xPos)
+                    if (blackPieces[i]->getY() < yPos && blackPieces[i]->getY() > kingY && blackPieces[i]->getX() == xPos)
                     {
                         return false;
                     }
                 }
                 else
                 {
-                    if (blackPieces[i]->getY() > yPos && blackPieces[i]->getY() < kingY && whitePieces[i]->getX() == xPos)
+                    if (blackPieces[i]->getY() > yPos && blackPieces[i]->getY() < kingY && blackPieces[i]->getX() == xPos)
                     {
                         return false;
                     }
