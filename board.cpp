@@ -86,6 +86,7 @@ board::board(std::string pieceList)
         getline(ss, text4, ',');
         int y = stoi(text4);
 
+        //Populating the white and black arrays
         if (side == 'w')
         {
             whitePieces[w] = new piece(pieceType, side, x, y);
@@ -124,6 +125,7 @@ board& board::operator++()
         //Check white pieces to move
         for (int i = 0; i < numWhitePieces; i++)
         {
+            //Moving required piece and setting new coordinates
             if (whitePieces[i]->getX() == oldX && whitePieces[i]->getY() == oldY)
             {
                 chessboard[oldY][oldX] = "-";
@@ -200,7 +202,6 @@ board& board::operator--()
                 //Check if king move is valid
                 if ((blackPieces[i]->getX()-1 >=0 && blackPieces[i]->getX()-1 < 8) && (blackPieces[i]->getY()-1 >=0 && blackPieces[i]->getY()-1 < 8) && chessboard[blackPieces[i]->getY()-1][blackPieces[i]->getX()-1] == "-")
                 {
-                    //std::cout<< "1" <<std::endl;
                     //Move king
                     blackPieces[i]->setX(blackPieces[i]->getX()-1);
                     blackPieces[i]->setY(blackPieces[i]->getY()-1);
@@ -564,6 +565,7 @@ bool board::checkIfPieceHasCheck(std::string pieceType, int xPos, int yPos, int 
             {
                 if (distanceX == abs(distanceX))
                 {
+                    //Checking for blocking pieces
                     if (whitePieces[i]->getX() < xPos && whitePieces[i]->getX() > kingX && whitePieces[i]->getY() == yPos)
                     {
                         return false;
@@ -639,6 +641,7 @@ bool board::checkIfPieceHasCheck(std::string pieceType, int xPos, int yPos, int 
         {
             for (int i = 0; i < numWhitePieces; i++)
             {
+                //Checking for blocking pieces
                 if (kingX<xPos && kingY>yPos)
                 {
                     if (abs(whitePieces[i]->getX()-xPos) == abs(whitePieces[i]->getY()-yPos) && (whitePieces[i]->getX()<xPos && whitePieces[i]->getY()>yPos) && (whitePieces[i]->getX()>kingX && whitePieces[i]->getY()<kingY))
@@ -860,6 +863,7 @@ bool board::checkIfPieceHasCheck(std::string pieceType, int xPos, int yPos, int 
     }
 }
 
+//Destructor deletes white and black piece array aswell as the chessboard
 board::~board()
 {
     int numOfPieces = 0;
@@ -901,3 +905,5 @@ board::~board()
 
     std::cout<< "Num Pieces Removed: " << numOfPieces <<std::endl;
 }
+
+// :)

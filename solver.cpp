@@ -17,16 +17,19 @@ solver::solver(std::string games)
 
     numGames = 0;
 
+    //Geting number of games
     while (getline(file, line)) {numGames++;}
 
     file.close();
 
+    //2D array to get required order
     int order[numGames][2];
 
     boards = new board*[numGames];
 
     file.open(games);
 
+    //Populating the oard array and order array
     for (int i = 0; i < numGames; i++)
     {
         getline(file, line);
@@ -43,6 +46,7 @@ solver::solver(std::string games)
 
     file.close();
 
+    //Sorting the 2D array
     int i, k, l, j;
 
     for (i = 1; i < numGames; i++)
@@ -61,12 +65,14 @@ solver::solver(std::string games)
         order[j + 1][0] = l;
     } 
 
+    //Solving all boards in array
     for (int i = 0; i < numGames; i++)
     {
         --*boards[order[i][0]];
     }  
 }
 
+//Deallocating board array
 solver::~solver()
 {
     for (int i = 0; i < numGames; i++)
@@ -79,5 +85,6 @@ solver::~solver()
     boards = NULL;
 
     std::cout<< "Num Boards Deleted: " << numGames <<std::endl;
-    
 }
+
+// :)
